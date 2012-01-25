@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "main.person", "fields": {"bio": "bio", "surname": "Kasyanov", "name": "Anton", "phone": "0665952325", "skype": "mind__master", "birth_date": "2012-01-24", "email": "mind_master@ukr.net"}}]
