@@ -1,4 +1,5 @@
 # Django settings for TestTask1 project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -102,7 +103,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'TestTask1.urls'
 
-TEMPLATE_DIRS = ('/home/mind/PycharmProjects/TestTask1/templates',)
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+
+TEMPLATE_DIRS = (PROJECT_PATH+'/templates/',)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
