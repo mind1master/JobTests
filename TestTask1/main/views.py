@@ -1,6 +1,6 @@
 # Create your views here.
 from django.shortcuts import render_to_response
-from main.models import Person
+from TestTask1.main.models import Person
 
 def index(request):
     person = Person.objects.all()[0]
