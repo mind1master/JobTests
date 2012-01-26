@@ -7,6 +7,7 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from django.test.client import Client
+from TestTask1.main.models import Request
 
 
 class SimpleTest(TestCase):
@@ -16,7 +17,7 @@ class SimpleTest(TestCase):
         """
         self.assertEqual(1 + 1, 2)
 
-class ResponseTest(TestCase):
+class MainPageTest(TestCase):
     def test_http(self):
         c = Client()
         response = c.get('/')
@@ -28,3 +29,12 @@ class ResponseTest(TestCase):
         self.assertContains(response, 'Phone')
         self.assertContains(response, 'Bio')
         self.assertContains(response, 'e-mail')
+        self.assertContains(response, 'requests')
+
+
+class RequestsPageTest(TestCase):
+    def test_http(self):
+        c = Client()
+        response = c.get('/requests')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Request.objects.count()>0, True)
