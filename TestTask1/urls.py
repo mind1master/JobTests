@@ -5,7 +5,10 @@ from django.views.generic import DetailView, ListView
 from django.contrib import admin
 from main.models import Person, Request
 
+
 admin.autodiscover()
+
+
 
 urlpatterns = patterns('',
     # Examples:

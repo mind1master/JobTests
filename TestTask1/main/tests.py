@@ -8,6 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from django.test.client import Client
 from TestTask1.main.models import Request
+from django.conf import settings
 
 
 class SimpleTest(TestCase):
@@ -31,10 +32,15 @@ class MainPageTest(TestCase):
         self.assertContains(response, 'e-mail')
         self.assertContains(response, 'requests')
 
-
 class RequestsPageTest(TestCase):
     def test_http(self):
         c = Client()
         response = c.get('/requests/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Request.objects.count()>0, True)
+
+class ContextTest(TestCase):
+    def test_context(self):
+        c = Client()
+        response = c.get('/')
+        self.assertEqual(response.context['settings'], gitsettings)
