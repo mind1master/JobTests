@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', DetailView.as_view(
         model=Person,
-        template_name='main.html'), {'pk': 1}),
+        template_name='main_page.html'), {'pk': 1}),
     # url(r'^TestTask1/', include('TestTask1.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

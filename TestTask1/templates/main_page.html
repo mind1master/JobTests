@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if person %}
+    <table>
+        <td width="200px">
+            Name: {{ person.name }} <br>
+            Last name: {{ person.surname }} <br>
+            Birth date: {{ person.birth_date }} <br>
+            Bio: <br>
+            {{ person.bio }}
+        </td>
+        <td>
+            Skype: {{ person.skype }} <br>
+            e-mail: {{ person.email }} <br>
+            Phone: {{ person.phone }} <br>
+        </td>
+    </table>
+
+{% else %}
+    <p>No available info.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block links %}
+    <a href="/requests">requests</a>
+{% endblock %}
