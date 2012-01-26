@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <ul>
+    {% for r in requests_list %}
+        <li>{{ r.time }} - {{ r.header }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block links %}
+    <a href="/">home</a>
+{% endblock %}

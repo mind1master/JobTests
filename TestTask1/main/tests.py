@@ -35,6 +35,6 @@ class MainPageTest(TestCase):
 class RequestsPageTest(TestCase):
     def test_http(self):
         c = Client()
-        response = c.get('/requests')
+        response = c.get('/requests/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Request.objects.count()>0, True)
