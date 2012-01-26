@@ -43,4 +43,4 @@ class ContextTest(TestCase):
     def test_context(self):
         c = Client()
         response = c.get('/')
-        self.assertEqual(response.context['settings'], gitsettings)
+        self.assertEqual(response.context['settings'], settings)
