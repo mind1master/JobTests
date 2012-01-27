@@ -8,8 +8,6 @@ from main.models import Person, Request
 
 admin.autodiscover()
 
-
-
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', DetailView.as_view(
