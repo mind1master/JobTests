@@ -32,6 +32,15 @@ class MainPageTest(TestCase):
         self.assertContains(response, 'Bio')
         self.assertContains(response, 'e-mail')
         self.assertContains(response, 'requests')
+        self.assertContains(response, '<img>')
+        self.assertContains(response, 'Login')
+
+
+class FormTest(TestCase):
+    def test_form(self):
+        c = Client()
+        response = c.get('/login/')
+        self.assertEqual(response.status_code, 200)
 
 
 class RequestsPageTest(TestCase):
