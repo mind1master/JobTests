@@ -1,28 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if person %}
-    <table>
-        <td width="200px">
-            Name: {{ person.name }} <br>
-            Last name: {{ person.surname }} <br>
-            Birth date: {{ person.birth_date }} <br>
-            Bio: <br>
-            {{ person.bio }}
-        </td>
-        <td>
-            Skype: {{ person.skype }} <br>
-            e-mail: {{ person.email }} <br>
-            Phone: {{ person.phone }} <br>
-        </td>
-    </table>
+    {% if person %}
+        <table>
+            <td width="200px">
+                Name: {{ person.name }} <br>
+                Last name: {{ person.surname }} <br>
+                Birth date: {{ person.birth_date }} <br>
+                Bio: <br>
+                {{ person.bio }}
+            </td>
+            <td width="400px">
+                Skype: {{ person.skype }} <br>
+                e-mail: {{ person.email }} <br>
+                Phone: {{ person.phone }} <br>
+            </td>
+            <td valign="top">
+                {% if user.is_authenticated %}
+                    <a href="/edit/">Edit</a>
+                    <a href="/logout/">Logout</a>
+                {% else %}
+                    <a href="/login/">Login</a>
+                {% endif %}
+            </td>
+        </table>
 
-{% else %}
-    <p>No available info.</p>
-{% endif %}
+    {% else %}
+        <p>No available info.</p>
+    {% endif %}
 
 {% endblock %}
 
 {% block links %}
     <a href="/requests/">requests</a>
+    <a href="/edit/">edit</a>
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form enctype="multipart/form-data" action="/edit/" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save"/>
+    </form>
+{% endblock %}
+
+{% block links %}
+    <a href="/">home</a>
+    <br>
+    <a href="/requests/">requests</a>
+{% endblock %}

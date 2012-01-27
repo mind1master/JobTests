@@ -101,6 +101,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.core.context_processors.i18n",
                                "django.core.context_processors.media",
                                "django.core.context_processors.static",
+                               "django.core.context_processors.csrf",
                                "django.contrib.messages.context_processors.messages",
                                "TestTask1.main.context_processors.settings_processor",)
 
@@ -118,6 +119,9 @@ PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 TEMPLATE_DIRS = (PROJECT_PATH + '/templates/',)
 
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/'
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',

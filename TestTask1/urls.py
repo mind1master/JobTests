@@ -18,6 +18,9 @@ urlpatterns = patterns('',
         context_object_name='requests_list',
         template_name='requests.html'
     )),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/', 'template_name': 'login.html'}),
+    url(r'^edit/$', 'TestTask1.main.views.editPerson'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
