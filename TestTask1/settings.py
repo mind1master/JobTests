@@ -45,9 +45,11 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = PROJECT_PATH + '/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
