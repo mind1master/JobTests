@@ -14,7 +14,7 @@ urlpatterns = patterns('',
         model=Person,
         template_name='main_page.html'), {'pk': 1}),
     url(r'^requests/$', ListView.as_view(
-        queryset=Request.objects.order_by('-time')[:10],
+        queryset=Request.objects.order_by('time')[:10],
         context_object_name='requests_list',
         template_name='requests.html'
     )),

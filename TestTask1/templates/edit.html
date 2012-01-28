@@ -2,13 +2,56 @@
 
 {% block content %}
     <form enctype="multipart/form-data" action="/edit/" method="post">{% csrf_token %}
-        {{ form.as_p }}
+        <table>
+            <tr>
+                <td width="250px">
+                    <div class="fieldWrapper">
+                        {{ form.name.errors }}
+                        <label for="id_name">Name:</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.surname.errors }}
+                        <label for="id_surname">Last name:</label>
+                        {{ form.surname }}
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.birth_date.errors }}
+                        <label for="id_birth_date">Birth day:</label>
+                        {{ form.birth_date }}
+                    </div>
+                </td>
+                <td>
+                    <div class="fieldWrapper">
+                        {{ form.skype.errors }}
+                        <label for="id_skype">Skype:</label>
+                        {{ form.skype }}
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.email.errors }}
+                        <label for="id_skype">e-mail:</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.phone.errors }}
+                        <label for="id_skype">Phone:</label>
+                        {{ form.phone }}
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td valign="top">
+                    <div class="fieldWrapper">
+                        {{ form.bio.errors }}
+                        <label for="id_skype">Bio:</label><br>
+                        {{ form.bio }}
+                    </div>
+                </td>
+
+            </tr>
+        </table>
         <input type="submit" value="Save"/>
     </form>
-{% endblock %}
-
-{% block links %}
-    <a href="/">home</a>
-    <br>
-    <a href="/requests/">requests</a>
 {% endblock %}

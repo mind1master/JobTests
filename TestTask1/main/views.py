@@ -19,9 +19,11 @@ def editPerson(request):
             #...
             #p.photo = np.photo
             p.save()
+            #np.save()
             return HttpResponseRedirect('/') # Redirect after POST
     else:
-        form = PersonForm() # An unbound form
+        p = Person.objects.get(pk=1)
+        form = PersonForm(instance=p) # An unbound form
 
     c = {'form': form}
     return render_to_response("edit.html", c, context_instance=RequestContext(request))
