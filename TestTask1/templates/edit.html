@@ -41,7 +41,15 @@
                 </td>
             </tr>
             <tr>
-                <td></td>
+                <td>
+                    <div class="fieldWrapper">
+                        {{ form.photo.errors }}
+                        <label for="id_photo">Photo:</label><br>
+                        <img width="150px" src="{{ form.instance.photo.url }}" alt=""><br>
+                        {{ form.photo }}
+                    </div>
+
+                </td>
                 <td valign="top">
                     <div class="fieldWrapper">
                         {{ form.bio.errors }}

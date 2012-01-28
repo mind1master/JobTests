@@ -9,7 +9,7 @@ from main.models import Person
 @login_required
 def editPerson(request):
     if request.method == 'POST': # If the form has been submitted...
-        form = PersonForm(request.POST) # A form bound to the POST data
+        form = PersonForm(request.POST, request.FILES) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             np = form.save(commit=False)
             np.pk = 1
