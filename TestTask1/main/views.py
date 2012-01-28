@@ -12,14 +12,8 @@ def editPerson(request):
         form = PersonForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             np = form.save(commit=False)
-            p = Person.objects.get(pk=1)
-            #TODO: fix such a stupid implementation
-            p.name = np.name
-            p.surname = np.surname
-            #...
-            #p.photo = np.photo
-            p.save()
-            #np.save()
+            np.pk = 1
+            np.save()
             return HttpResponseRedirect('/') # Redirect after POST
     else:
         p = Person.objects.get(pk=1)
