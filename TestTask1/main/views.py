@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from main.forms import PersonForm
-from main.models import Person
+from TestTask1.main.forms import PersonForm
+from TestTask1.main.models import Person
 
 @login_required
 def editPerson(request):
