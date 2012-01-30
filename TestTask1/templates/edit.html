@@ -45,8 +45,9 @@
                     <div class="fieldWrapper">
                         {{ form.photo.errors }}
                         <label for="id_photo">Photo:</label><br>
-                        <img width="150px" src="{{ form.instance.photo.url }}" alt=""><br>
-                        {{ form.photo }}
+                        <img width="150px" src="{{ profile.photo.url }}" alt=""><br>
+
+                        <p>Change: <input type="file" name="photo" id="id_photo"/>
                     </div>
 
                 </td>
@@ -60,6 +61,8 @@
 
             </tr>
         </table>
+
         <input type="submit" value="Save"/>
+
     </form>
 {% endblock %}
