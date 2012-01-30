@@ -14,7 +14,8 @@
             $('#save').live('click', function () {
                 $('#save_form').ajaxSubmit({
                     success:function (data, statusText, xhr, $form) {
-                        // Удаляем ошибки если были
+                        // $form.find('input, textarea').attr('disabled','disabled');
+                        $('input, textarea').attr('disabled', 'disabled');
                         $('#error').hide();
                         $('#success').hide();
                         $('#load').show("fast");
@@ -29,6 +30,7 @@
                             display_form_errors(data['response'], $form);
                         }
                         $('#load').hide("fast");
+                        $('input, textarea').removeAttr('disabled');
                     },
                     dataType:'json'
                 });
