@@ -20,6 +20,7 @@
                         $('#load').show("fast");
                         $form.find('.error').remove();
                         if (data['result'] == 'success') {
+                            $('#photo').attr('src', data['response']);
                             $('#success').show("slow");
                         }
                         else if (data['result'] == 'error') {
@@ -45,6 +46,10 @@
 
         .green {
             background: #adff2f;
+        }
+
+        .error {
+            color: red;
         }
     </style>
 {% endblock %}
@@ -103,8 +108,8 @@
                     <div class="fieldWrapper">
                         {{ form.photo.errors }}
                         <label for="id_photo">Photo:</label><br>
-                        <img width="150px" src="{{ form.instance.photo.url }}" alt=""><br>
-                        {{ form.photo }}
+                        <img id="photo" width="150px" src="{{ profile.photo.url }}" alt=""><br>
+                        Change: <input type="file" name="photo" id="id_photo"/>
                     </div>
 
                 </td>
@@ -118,6 +123,6 @@
 
             </tr>
         </table>
-        <span id="save">Save</span>
+        <p><a href="#" id="save">Save</a>
     </form>
 {% endblock %}
