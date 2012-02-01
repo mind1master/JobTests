@@ -1,13 +1,13 @@
 MANAGE=django-admin.py
 
 test:
-	PYTHONPATH=../uwsgi DJANGO_SETTINGS_MODULE=settings_deploy $(MANAGE) test main
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=TestTask1.settings $(MANAGE) test main
 
 run:
-	PYTHONPATH=../uwsgi DJANGO_SETTINGS_MODULE=settings_deploy $(MANAGE) runserver
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=TestTask1.settings $(MANAGE) runserver
 
 syncdb:
-	PYTHONPATH=../uwsgi DJANGO_SETTINGS_MODULE=settings_deploy $(MANAGE) syncdb --noinput
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=TestTask1.settings $(MANAGE) syncdb --noinput
 	
 migrate:
-	PYTHONPATH=../uwsgi DJANGO_SETTINGS_MODULE=settings_deploy $(MANAGE) convert_to_south main && PYTHONPATH=../uwsgi DJANGO_SETTINGS_MODULE=settings_deploy $(MANAGE) migrate main
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=TestTask1.settings $(MANAGE) convert_to_south main && PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=TestTask1.settings $(MANAGE) migrate main
