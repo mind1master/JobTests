@@ -1,19 +1,5 @@
 [
     {
-        "pk":1,
-        "model":"main.person",
-        "fields":{
-            "bio":"my bio",
-            "surname":"Kasyanov",
-            "name":"Anton",
-            "photo":"avatar/no_image.jpg",
-            "phone":"0665952325",
-            "skype":"mind__master",
-            "birth_date":"1994-04-23",
-            "email":"mind_master@ukr.net"
-        }
-    },
-    {
         "pk":5,
         "model":"contenttypes.contenttype",
         "fields":{
@@ -50,6 +36,15 @@
         }
     },
     {
+        "pk":9,
+        "model":"contenttypes.contenttype",
+        "fields":{
+            "model":"migrationhistory",
+            "name":"migration history",
+            "app_label":"south"
+        }
+    },
+    {
         "pk":1,
         "model":"contenttypes.contenttype",
         "fields":{
@@ -59,7 +54,7 @@
         }
     },
     {
-        "pk":10,
+        "pk":11,
         "model":"contenttypes.contenttype",
         "fields":{
             "model":"person",
@@ -68,7 +63,7 @@
         }
     },
     {
-        "pk":9,
+        "pk":10,
         "model":"contenttypes.contenttype",
         "fields":{
             "model":"request",
@@ -104,11 +99,46 @@
         }
     },
     {
+        "pk":"34319182582ad27e7c52acb809e31ea2",
+        "model":"sessions.session",
+        "fields":{
+            "expire_date":"2012-02-15 11:52:18",
+            "session_data":"MmRlNjEzNmEyYTA5YjY1NTJlMTA4ZWE0NWQzMjM2YmYxN2U5OTc3ZTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQRLAXUu\n"
+        }
+    },
+    {
         "pk":1,
         "model":"sites.site",
         "fields":{
             "domain":"example.com",
             "name":"example.com"
+        }
+    },
+    {
+        "pk":1,
+        "model":"admin.logentry",
+        "fields":{
+            "action_flag":1,
+            "action_time":"2012-02-01 11:53:08",
+            "object_repr":"Person object",
+            "object_id":"1",
+            "change_message":"",
+            "user":1,
+            "content_type":11
+        }
+    },
+    {
+        "pk":1,
+        "model":"main.person",
+        "fields":{
+            "bio":"some bio\r\nhere",
+            "surname":"Kasyanov",
+            "name":"Anton",
+            "photo":"avatar/no_image.jpg",
+            "phone":"0665952325",
+            "skype":"mind__master",
+            "birth_date":"1994-04-23",
+            "email":"mind_master@ukr.net"
         }
     },
     {
@@ -274,11 +304,38 @@
         }
     },
     {
-        "pk":28,
+        "pk":31,
         "model":"auth.permission",
         "fields":{
             "codename":"add_person",
             "name":"Can add person",
+            "content_type":11
+        }
+    },
+    {
+        "pk":32,
+        "model":"auth.permission",
+        "fields":{
+            "codename":"change_person",
+            "name":"Can change person",
+            "content_type":11
+        }
+    },
+    {
+        "pk":33,
+        "model":"auth.permission",
+        "fields":{
+            "codename":"delete_person",
+            "name":"Can delete person",
+            "content_type":11
+        }
+    },
+    {
+        "pk":28,
+        "model":"auth.permission",
+        "fields":{
+            "codename":"add_request",
+            "name":"Can add request",
             "content_type":10
         }
     },
@@ -286,8 +343,8 @@
         "pk":29,
         "model":"auth.permission",
         "fields":{
-            "codename":"change_person",
-            "name":"Can change person",
+            "codename":"change_request",
+            "name":"Can change request",
             "content_type":10
         }
     },
@@ -295,36 +352,9 @@
         "pk":30,
         "model":"auth.permission",
         "fields":{
-            "codename":"delete_person",
-            "name":"Can delete person",
-            "content_type":10
-        }
-    },
-    {
-        "pk":25,
-        "model":"auth.permission",
-        "fields":{
-            "codename":"add_request",
-            "name":"Can add request",
-            "content_type":9
-        }
-    },
-    {
-        "pk":26,
-        "model":"auth.permission",
-        "fields":{
-            "codename":"change_request",
-            "name":"Can change request",
-            "content_type":9
-        }
-    },
-    {
-        "pk":27,
-        "model":"auth.permission",
-        "fields":{
             "codename":"delete_request",
             "name":"Can delete request",
-            "content_type":9
+            "content_type":10
         }
     },
     {
@@ -382,6 +412,33 @@
         }
     },
     {
+        "pk":25,
+        "model":"auth.permission",
+        "fields":{
+            "codename":"add_migrationhistory",
+            "name":"Can add migration history",
+            "content_type":9
+        }
+    },
+    {
+        "pk":26,
+        "model":"auth.permission",
+        "fields":{
+            "codename":"change_migrationhistory",
+            "name":"Can change migration history",
+            "content_type":9
+        }
+    },
+    {
+        "pk":27,
+        "model":"auth.permission",
+        "fields":{
+            "codename":"delete_migrationhistory",
+            "name":"Can delete migration history",
+            "content_type":9
+        }
+    },
+    {
         "pk":1,
         "model":"auth.user",
         "fields":{
@@ -391,12 +448,12 @@
             "is_active":true,
             "is_superuser":true,
             "is_staff":true,
-            "last_login":"2012-01-26 13:27:11",
+            "last_login":"2012-02-01 11:52:17",
             "groups":[],
             "user_permissions":[],
-            "password":"sha1$003a2$8e931fac1e6fcb72e446c6803808cd1f6de7d83f",
+            "password":"sha1$f1507$ffbba12c9f379c7a4e19e24293432f734171f476",
             "email":"mind_master@ukr.net",
-            "date_joined":"2012-01-26 13:27:11"
+            "date_joined":"2012-02-01 11:49:21"
         }
     }
 ]
