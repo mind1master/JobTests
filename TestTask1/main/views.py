@@ -10,9 +10,6 @@ from TestTask1.main.models import Person
 
 @login_required
 def editPerson(request):
-    import pdb;
-
-    pdb.set_trace();
     p = Person.objects.get(pk=1)
     if request.method == 'POST':
         form = PersonForm(request.POST, request.FILES) #
