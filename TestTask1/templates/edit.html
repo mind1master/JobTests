@@ -15,14 +15,12 @@
             $('#load').hide();
             $('#error').hide();
             $('#success').hide();
+            var myForm = $(this).find('input');
             $('#save').live('click', function () {
                 $('#save_form').ajaxSubmit({
                     success:function (data, statusText, xhr, $form) {
                         // $form.find('input, textarea').attr('disabled','disabled');
-                        $('input, textarea').attr('disabled', 'disabled');
-                        $('#error').hide();
-                        $('#success').hide();
-                        $('#load').show("fast");
+                        alert('success');
                         $form.find('.error').remove();
                         if (data['result'] == 'success') {
                             $('#photo').attr('src', data['response']);
@@ -34,8 +32,23 @@
                             display_form_errors(data['response'], $form);
                         }
                         $('#load').hide("fast");
-                        $('input, textarea').removeAttr('disabled');
                     },
+                    beforeSubmit:function (arr, $form, options) {
+                        $('#error').hide();
+                        $('#success').hide();
+                        $('#load').show("fast");
+                        //$form.find('input, textarea').attr('disabled','disabled');
+                        $(myForm).attr('disabled', true);
+                        alert('wtf?');
+                        return true;
+                    },
+                    error:function () {
+                        alert("Failed to submit!");
+                        $('#load').hide("fast");
+                        //submit normal way
+                        //return true;
+                    },
+                    timeout:3000,
                     dataType:'json'
                 });
             });
