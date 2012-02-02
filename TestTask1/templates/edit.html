@@ -15,38 +15,33 @@
             $('#load').hide();
             $('#error').hide();
             $('#success').hide();
-            var myForm = $(this).find('input');
+            var myForm = $('form').find('input, textarea');
             $('#save').live('click', function () {
+                $(myForm).prop('readonly', true);
                 $('#save_form').ajaxSubmit({
+                    beforeSubmit:function (arr, $form, options) {
+                        $('#error').hide();
+                        $('#success').hide();
+                        $('#load').show("fast");
+
+                    },
                     success:function (data, statusText, xhr, $form) {
-                        // $form.find('input, textarea').attr('disabled','disabled');
-                        alert('success');
                         $form.find('.error').remove();
                         if (data['result'] == 'success') {
                             $('#photo').attr('src', data['response']);
                             $('#success').show("slow");
                         }
                         else if (data['result'] == 'error') {
-                            // Показываем ошибки
                             $('#error').show("fast");
                             display_form_errors(data['response'], $form);
                         }
                         $('#load').hide("fast");
-                    },
-                    beforeSubmit:function (arr, $form, options) {
-                        $('#error').hide();
-                        $('#success').hide();
-                        $('#load').show("fast");
-                        //$form.find('input, textarea').attr('disabled','disabled');
-                        $(myForm).attr('disabled', true);
-                        alert('wtf?');
-                        return true;
+                        $(myForm).prop('readonly', false);
                     },
                     error:function () {
                         alert("Failed to submit!");
                         $('#load').hide("fast");
-                        //submit normal way
-                        //return true;
+                        $(myForm).prop('readonly', false);
                     },
                     timeout:3000,
                     dataType:'json'
