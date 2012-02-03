@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
+{% load my_tags %}
+
+
 {% block content %}
+    {% edit_link user %}
+    {% edit_link person %}
     {% if person %}
         <table>
             <tr>
