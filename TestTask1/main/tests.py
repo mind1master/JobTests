@@ -9,8 +9,8 @@ from django.test import TestCase
 from django.test.client import Client
 from TestTask1.main.models import Request
 from django.conf import settings
-from main.forms import PersonForm
-from main.models import Person
+from TestTask1.main.forms import PersonForm
+from TestTask1.main.models import Person
 import string
 
 class SimpleTest(TestCase):
