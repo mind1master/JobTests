@@ -107,6 +107,6 @@ class SignalsTest(TestCase):
     def test_signals(self):
         c = Client()
         c.get('/non_existing')
-        m, created = SignalInfo.objects.get_or_create(body__contains='non_existing')
+        m, created = SignalInfo.objects.get_or_create(body__contains='/non_existing')
         self.assertFalse(created)
 
