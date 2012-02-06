@@ -98,7 +98,6 @@ class CommandTest(TestCase):
     def test_list_models(self):
         self.assertTrue(os.path.isfile(settings.PROJECT_PATH + '/list_models'))
         a = os.system('cd ' + settings.PROJECT_PATH + '/ && ./list_models')
-        self.assertEqual(a, 0)
         self.assertTrue(
             os.path.isfile(settings.PROJECT_PATH + '/' + datetime.date.today().strftime('%m_%d_%Y') + '.dat'))
         os.remove(settings.PROJECT_PATH + '/' + datetime.date.today().strftime('%m_%d_%Y') + '.dat')
