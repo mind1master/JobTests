@@ -11,7 +11,6 @@ from TestTask1.main.models import Request
 from django.conf import settings
 from TestTask1.main.forms import PersonForm
 from TestTask1.main.models import Person
-import string
 
 class SimpleTest(TestCase):
     def test_basic_addition(self):
@@ -65,19 +64,6 @@ class FormTest(TestCase):
         self.assertEqual(form.is_valid(), False)
 
 
-class FieldOrderTest(TestCase):
-    def test_fields(self):
-        form = PersonForm()
-        self.assertEqual(form.fields.keys(),
-            ['bio', 'birth_date', 'surname', 'name', 'photo', 'phone', 'email', 'skype'])
-        c = Client()
-        c.login(username='admin', password='admin')
-        response = c.get('/edit/')
-        a = string.find(response.__str__(), 'Bio')
-        b = string.find(response.__str__(), 'Name')
-        self.assertLess(a, b)
-
-
 class RequestsPageTest(TestCase):
     def test_http(self):
         c = Client()
@@ -91,3 +77,18 @@ class ContextTest(TestCase):
         c = Client()
         response = c.get('/')
         self.assertEqual(response.context['settings'], settings)
+
+
+class TagTest(TestCase):
+    def test_tag(self):
+        c = Client()
+        response = c.get('/')
+        self.assertContains(response, '/admin/main/person/1/')
+        self.assertContains(response, 'Sorry, no admin link for this.')
+        self.assertNotContains(response, '/admin/auth/user/1/')
+        c.login(username='admin', password='admin')
+        response = c.get('/')
+        self.assertContains(response, '/admin/auth/user/1/')
+        self.assertNotContains(response, 'Sorry, no admin link for this.')
+
+
