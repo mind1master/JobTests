@@ -9,6 +9,8 @@ from django.test import TestCase
 from django.test.client import Client
 from TestTask1.main.models import Request
 from django.conf import settings
+from main.forms import PersonForm
+from main.models import Person
 
 
 class SimpleTest(TestCase):
@@ -37,7 +39,7 @@ class MainPageTest(TestCase):
 
 
 class AuthTest(TestCase):
-    def test_form(self):
+    def test_auth(self):
         c = Client()
         response = c.get('/login/')
         self.assertEqual(response.status_code, 200)
@@ -45,6 +47,23 @@ class AuthTest(TestCase):
         self.assertEqual(response.status_code, 302)
         response = c.get('/edit/')
         self.assertEqual(response.status_code, 302)
+        self.assertEqual(c.login(username='admin', password='admin'), True)
+        response = c.get('/edit/')
+        self.assertEqual(response.status_code, 200)
+
+
+class FormTest(TestCase):
+    def test_form(self):
+        p = Person.objects.get(pk=1)
+        mdata = {'name': p.name, 'surname': p.surname, 'birth_date': p.birth_date,
+                 'bio': p.bio, 'skype': p.skype, 'email': p.email,
+                 'phone': p.phone, 'photo': p.photo}
+        form = PersonForm(data=mdata)
+        self.assertEqual(form.is_valid(), True)
+        ndata = mdata.copy()
+        ndata['name'] = None
+        form = PersonForm(data=ndata)
+        self.assertEqual(form.is_valid(), False)
 
 
 class RequestsPageTest(TestCase):
