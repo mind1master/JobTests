@@ -10,7 +10,7 @@ from django.test.client import Client
 from TestTask1.main.models import Request
 from django.conf import settings
 from TestTask1.main.forms import PersonForm
-from TestTask1.main.models import Person
+from TestTask1.main.models import Person, SignalInfo
 import os
 import datetime
 
@@ -102,4 +102,11 @@ class CommandTest(TestCase):
             os.path.isfile(settings.PROJECT_PATH + '/' + datetime.date.today().strftime('%m_%d_%Y') + '.dat'))
         os.remove(settings.PROJECT_PATH + '/' + datetime.date.today().strftime('%m_%d_%Y') + '.dat')
 
+
+class SignalsTest(TestCase):
+    def test_signals(self):
+        c = Client()
+        c.get('/non_existing')
+        m, created = SignalInfo.objects.get_or_create(body__contains='non_existing')
+        self.assertFalse(created)
 
