@@ -73,8 +73,8 @@ class FieldOrderTest(TestCase):
         c = Client()
         c.login(username='admin', password='admin')
         response = c.get('/edit/')
-        a = string.find(response.__str__(), 'Bio')
-        b = string.find(response.__str__(), 'Name')
+        a = string.find(response.content, 'Bio')
+        b = string.find(response.content, 'Name')
         self.assertLess(a, b)
 
 
