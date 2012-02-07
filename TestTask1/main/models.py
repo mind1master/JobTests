@@ -6,7 +6,7 @@ class Request(models.Model):
     body = models.CharField(max_length=300)
     time = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return 'Request at {0}: {1}'.format(self.time, self.header)
 
 
@@ -25,7 +25,7 @@ class SignalInfo(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     body = models.CharField(max_length=256)
 
-    def __str__(self):
+    def __unicode__(self):
         return '{0} at {1}'.format(self.body, self.time)
 
 
