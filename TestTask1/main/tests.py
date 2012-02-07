@@ -9,7 +9,6 @@ from django.test import TestCase
 from django.test.client import Client
 from TestTask1.main.models import Request
 from django.conf import settings
-from TestTask1.main.forms import PersonForm
 from TestTask1.main.models import Person
 
 
@@ -55,15 +54,15 @@ class AuthTest(TestCase):
 class FormTest(TestCase):
     def test_form(self):
         p = Person.objects.get(pk=1)
-        mdata = {'name': p.name, 'surname': p.surname, 'birth_date': p.birth_date,
+        mdata = {'name': 'TestName', 'surname': p.surname, 'birth_date': p.birth_date,
                  'bio': p.bio, 'skype': p.skype, 'email': p.email,
                  'phone': p.phone, 'photo': p.photo}
-        form = PersonForm(data=mdata)
-        self.assertEqual(form.is_valid(), True)
-        ndata = mdata.copy()
-        ndata['name'] = None
-        form = PersonForm(data=ndata)
-        self.assertEqual(form.is_valid(), False)
+        c = Client()
+        c.login(username='admin', password='admin')
+        response = c.post('/edit/', mdata)
+        p = Person.objects.get(pk=1)
+        self.assertEqual(p.name, 'TestName')
+        self.assertEqual(response.status_code, 200)
 
 
 class RequestsPageTest(TestCase):
