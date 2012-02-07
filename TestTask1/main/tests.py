@@ -54,9 +54,9 @@ class AuthTest(TestCase):
 class FormTest(TestCase):
     def test_post_form(self):
         p = Person.objects.get(pk=1)
-        mdata = {'name': 'TestName', 'surname': p.surname, 'birth_date': p.birth_date,
+        mdata = {'name': 'TestName', 'surname': p.surname, 'birth_date': p.birth_date.__str__(),
                  'bio': p.bio, 'skype': p.skype, 'email': p.email,
-                 'phone': p.phone, 'photo': p.photo}
+                 'phone': p.phone}
         c = Client()
         c.login(username='admin', password='admin')
         response = c.post('/edit/', mdata)
