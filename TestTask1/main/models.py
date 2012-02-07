@@ -30,13 +30,14 @@ class SignalInfo(models.Model):
 
 
 def edit_callback(sender, created, instance, **kwargs):
-    if (not sender == SignalInfo):
-        if (created):
-            action = 'created'
-        else:
-            action = 'edited'
-        s = SignalInfo(body='\'{0}\' was {1}'.format(instance, action))
-        s.save()
+    if (sender == SignalInfo):
+        return
+    if (created):
+        action = 'created'
+    else:
+        action = 'edited'
+    s = SignalInfo(body='\'{0}\' was {1}'.format(instance, action))
+    s.save()
 
 
 def delete_callback(sender, instance, **kwargs):
