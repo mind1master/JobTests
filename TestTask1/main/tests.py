@@ -52,7 +52,7 @@ class AuthTest(TestCase):
 
 
 class FormTest(TestCase):
-    def test_form(self):
+    def test_post_form(self):
         p = Person.objects.get(pk=1)
         mdata = {'name': 'TestName', 'surname': p.surname, 'birth_date': p.birth_date,
                  'bio': p.bio, 'skype': p.skype, 'email': p.email,
@@ -60,6 +60,20 @@ class FormTest(TestCase):
         c = Client()
         c.login(username='admin', password='admin')
         response = c.post('/edit/', mdata)
+        p = Person.objects.get(pk=1)
+        self.assertEqual(p.name, 'TestName')
+        self.assertEqual(response.status_code, 200)
+
+
+class AjaxFormTest(TestCase):
+    def test_ajax_form(self):
+        p = Person.objects.get(pk=1)
+        mdata = {'name': 'TestName', 'surname': p.surname, 'birth_date': p.birth_date.__str__(),
+                 'bio': p.bio, 'skype': p.skype, 'email': p.email,
+                 'phone': p.phone}
+        c = Client()
+        c.login(username='admin', password='admin')
+        response = c.post('/edit/', mdata, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         p = Person.objects.get(pk=1)
         self.assertEqual(p.name, 'TestName')
         self.assertEqual(response.status_code, 200)
