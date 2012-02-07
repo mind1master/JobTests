@@ -11,4 +11,4 @@ class Command(NoArgsCommand):
                 self.stdout.write('%s - %d objects \n' % (m, m.objects.count()))
                 self.stderr.write('error: %s - %d objects \n' % (m, m.objects.count()))
         except utils.DatabaseError:
-            self.stderr.write('error: Can\' get models list. Probably you didn\'t perform any syncdb.\n')
+            self.stderr.write('error: Can\' get models count. Probably you didn\'t perform any syncdb.\n')
