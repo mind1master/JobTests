@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block js %}
+
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.form.js"></script>
+    {{ form.media }}
+    <script type="text/javascript">
+        function display_form_errors(errors, $form) {
+            for (var k in errors) {
+                $form.find('input[name=' + k + ']').after('<div class="error">' + errors[k] + '</div>');
+            }
+        }
+        $(document).ready(function () {
+            $('#load').hide();
+            $('#error').hide();
+            $('#success').hide();
+            var myForm = $('form').find('input, textarea');
+            $('#save').live('click', function () {
+                $(myForm).prop('readonly', true);
+                $('#save_form').ajaxSubmit({
+                    beforeSubmit:function (arr, $form, options) {
+                        $('#error').hide();
+                        $('#success').hide();
+                        $('#load').show("fast");
+
+                    },
+                    success:function (data, statusText, xhr, $form) {
+                        $form.find('.error').remove();
+                        if (data['result'] == 'success') {
+                            $('#photo').attr('src', data['response']);
+                            $('#success').show("slow");
+                        }
+                        else if (data['result'] == 'error') {
+                            $('#error').show("fast");
+                            display_form_errors(data['response'], $form);
+                        }
+                        $('#load').hide("fast");
+                        $(myForm).prop('readonly', false);
+                    },
+                    error:function () {
+                        alert("Failed to submit!");
+                        $('#load').hide("fast");
+                        $(myForm).prop('readonly', false);
+                    },
+                    timeout:10000,
+                    dataType:'json'
+                });
+            });
+        })
+    </script>
+    <style type="text/css">
+        .yellow {
+            background: yellow;
+        }
+
+        .red {
+            background: red;
+        }
+
+        .green {
+            background: #adff2f;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="load" class="yellow">
+        Loading...
+    </div>
+    <div id="success" class="green">
+        Success!
+    </div>
+    <div id="error" class="red">
+        There are errors!
+    </div>
+    <form id="save_form" enctype="multipart/form-data" action="/edit/" method="post">{% csrf_token %}
+        <table>
+            <tr>
+                <td width="250px">
+                    <div class="fieldWrapper">
+                        {{ form.name.errors }}
+                        <label for="id_name">Name:</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.surname.errors }}
+                        <label for="id_surname">Last name:</label>
+                        {{ form.surname }}
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.birth_date.errors }}
+                        <label for="id_birth_date">Birth day:</label>
+                        {{ form.birth_date }}
+                    </div>
+                </td>
+                <td>
+                    <div class="fieldWrapper">
+                        {{ form.skype.errors }}
+                        <label for="id_skype">Skype:</label>
+                        {{ form.skype }}
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.email.errors }}
+                        <label for="id_skype">e-mail:</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.phone.errors }}
+                        <label for="id_skype">Phone:</label>
+                        {{ form.phone }}
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="fieldWrapper">
+                        {{ form.photo.errors }}
+                        <label for="id_photo">Photo:</label><br>
+                        <img id="photo" width="150px" src="{{ profile.photo.url }}" alt=""><br>
+                        Change: <input type="file" name="photo" id="id_photo"/>
+                    </div>
+
+                </td>
+                <td valign="top">
+                    <div class="fieldWrapper">
+                        {{ form.bio.errors }}
+                        <label for="id_skype">Bio:</label><br>
+                        {{ form.bio }}
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+        <p><a href="#" id="save">Save</a>
+    </form>
+{% endblock %}

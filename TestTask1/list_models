@@ -1,0 +1,3 @@
+#!/bin/bash
+now=$(date +"%m_%d_%Y")
+python manage.py list_models 2> $now.dat

@@ -1,25 +1,49 @@
 {% extends "base.html" %}
 
-{% block content %}
-{% if person %}
-    <table>
-        <td width="200px">
-            Name: {{ person.name }} <br>
-            Last name: {{ person.surname }} <br>
-            Birth date: {{ person.birth_date }} <br>
-            Bio: <br>
-            {{ person.bio }}
-        </td>
-        <td>
-            Skype: {{ person.skype }} <br>
-            e-mail: {{ person.email }} <br>
-            Phone: {{ person.phone }} <br>
-        </td>
-    </table>
+{% load my_tags %}
 
-{% else %}
-    <p>No available info.</p>
-{% endif %}
+
+{% block content %}
+    {% edit_link person %}<br>{% edit_link user %}
+    {% if person %}
+        <table>
+            <tr>
+                <td width="250px">
+                    Name: {{ person.name }} <br>
+                    Last name: {{ person.surname }} <br>
+                    Birth date: {{ person.birth_date }} <br>
+                    Photo: <br>
+
+                </td>
+                <td width="400px">
+                    Skype: {{ person.skype }} <br>
+                    e-mail: {{ person.email }} <br>
+                    Phone: {{ person.phone }} <br>
+
+                </td>
+                <td valign="top">
+                    {% if user.is_authenticated %}
+                        <a href="/edit/">Edit</a>
+                        <a href="/logout/">Logout</a>
+                    {% else %}
+                        <a href="/login/">Login</a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img width="150px" src="{{ person.photo.url }}" alt="">
+                </td>
+                <td valign="top">
+                    Bio: <br>
+                    {{ person.bio }}
+                </td>
+            </tr>
+        </table>
+
+    {% else %}
+        <p>No available info.</p>
+    {% endif %}
 
 {% endblock %}
 
