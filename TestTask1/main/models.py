@@ -5,6 +5,7 @@ class Request(models.Model):
     header = models.CharField(max_length=100)
     body = models.CharField(max_length=300)
     time = models.DateTimeField(auto_now_add=True)
+    priority = models.IntegerField(default=0)
 
     def __unicode__(self):
         return 'Request at {0}: {1}'.format(self.time, self.header)
