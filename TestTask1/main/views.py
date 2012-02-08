@@ -5,8 +5,10 @@ from django.http import  HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils import simplejson
+from django.views.generic.list import ListView
 from TestTask1.main.forms import PersonForm
 from TestTask1.main.models import Person
+from main.models import Request
 
 @login_required
 def editPerson(request):
@@ -30,3 +32,10 @@ def editPerson(request):
 
     c = {'form': form, 'profile': p}
     return render_to_response("edit.html", c, context_instance=RequestContext(request))
+
+
+class RequestList(ListView):
+    queryset = Request.objects.order_by('priority', 'time')
+    context_object_name = 'requests_list'
+    template_name = 'requests.html'
+    paginate_by = 10

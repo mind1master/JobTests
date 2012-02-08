@@ -10,6 +10,9 @@ class Request(models.Model):
     def __unicode__(self):
         return 'Request at {0}: {1}'.format(self.time, self.header)
 
+    class Meta:
+        ordering = ["priority", "time"]
+
 
 class Person(models.Model):
     name = models.CharField(max_length=25)
