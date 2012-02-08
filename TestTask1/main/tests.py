@@ -110,3 +110,18 @@ class SignalsTest(TestCase):
         m, created = SignalInfo.objects.get_or_create(body__contains='/non_existing')
         self.assertFalse(created)
 
+
+class PriorityTest(TestCase):
+    def test_request_priority(self):
+        c = Client()
+        c.get('/')
+        pk = Request.objects.all()[0].pk
+        response = c.get('/request/{0}/inc'.format(pk))
+        self.assertEqual(response, 302)
+        r = Request.objects.get(pk=pk)
+        self.assertEqual(r.priority, 1)
+        response = c.get('/request/{0}/dec'.format(pk))
+        self.assertEqual(response, 302)
+        r = Request.objects.get(pk=pk)
+        self.assertEqual(r.priority, 0)
+
