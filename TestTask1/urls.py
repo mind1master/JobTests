@@ -12,10 +12,14 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
                        url(r'^requests/(?P<page>\d+)/$', RequestList.as_view()),
+                       url(r'^requests/$', RequestList.as_view()),
+
+                       url(r'^request/(?P<pk>\d+)/(?P<action>inc|dec)/$', 'TestTask1.main.views.changePriorityView'),
+
                        url(r'^$', DetailView.as_view(
                            model=Person,
                            template_name='main_page.html'), {'pk': 1}),
-                       url(r'^requests/$', RequestList.as_view()),
+
                        url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
                        url(r'^logout/$', 'django.contrib.auth.views.logout',
                                {'next_page': '/', 'template_name': 'login.html'}),

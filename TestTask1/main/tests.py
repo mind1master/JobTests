@@ -107,7 +107,7 @@ class SignalsTest(TestCase):
     def test_signals(self):
         c = Client()
         c.get('/non_existing')
-        m, created = SignalInfo.objects.get_or_create(body__contains='/non_existing')
+        m, created = SignalInfo.objects.get_or_create(pk=1)
         self.assertFalse(created)
 
 
@@ -116,12 +116,12 @@ class PriorityTest(TestCase):
         c = Client()
         c.get('/')
         pk = Request.objects.all()[0].pk
-        response = c.get('/request/{0}/inc'.format(pk))
-        self.assertEqual(response, 302)
+        response = c.get('/request/{0}/inc/'.format(pk))
+        self.assertEqual(response.status_code, 302)
         r = Request.objects.get(pk=pk)
         self.assertEqual(r.priority, 1)
-        response = c.get('/request/{0}/dec'.format(pk))
-        self.assertEqual(response, 302)
+        response = c.get('/request/{0}/dec/'.format(pk))
+        self.assertEqual(response.status_code, 302)
         r = Request.objects.get(pk=pk)
         self.assertEqual(r.priority, 0)
 

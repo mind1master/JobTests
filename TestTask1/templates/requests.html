@@ -3,7 +3,9 @@
 {% block content %}
     <ul>
         {% for r in requests_list %}
-            <li>{{ r.time }} - {{ r.header }}</li>
+            <li>{{ r.time }} - {{ r.header }}, <i>priority</i>: {{ r.priority }}
+                (<a href="/request/{{ r.pk }}/inc">&uarr;&nbsp;</a>|<a href="/request/{{ r.pk }}/dec">&darr;&nbsp;</a>)
+            </li>
         {% endfor %}
     </ul>
     {% if paginator.num_pages > 1 %}
