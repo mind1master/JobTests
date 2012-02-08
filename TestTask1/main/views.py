@@ -7,8 +7,7 @@ from django.template.context import RequestContext
 from django.utils import simplejson
 from django.views.generic.list import ListView
 from TestTask1.main.forms import PersonForm
-from TestTask1.main.models import Person
-from main.models import Request
+from TestTask1.main.models import Person, Request
 
 @login_required
 def editPerson(request):
