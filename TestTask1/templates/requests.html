@@ -2,10 +2,20 @@
 
 {% block content %}
     <ul>
-    {% for r in requests_list %}
-        <li>{{ r.time }} - {{ r.header }}</li>
-    {% endfor %}
+        {% for r in requests_list %}
+            <li>{{ r.time }} - {{ r.header }}</li>
+        {% endfor %}
     </ul>
+    {% if paginator.num_pages > 1 %}
+        Pages:&nbsp;
+        {% if page_obj.has_previous %}
+            <a href="/requests/{{ page_obj.previous_page_number }}/">&larr;</a>
+        {% endif %}
+        {{ page_obj.number }}
+        {% if page_obj.has_next %}
+            <a href="/requests/{{ page_obj.next_page_number }}/">&rarr;</a>
+        {% endif %}
+    {% endif %}
 {% endblock %}
 
 {% block links %}

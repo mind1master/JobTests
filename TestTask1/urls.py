@@ -11,7 +11,6 @@ from main.views import RequestList
 admin.autodiscover()
 
 urlpatterns = patterns('',
-                       # Examples:
                        url(r'^requests/(?P<page>\d+)/$', RequestList.as_view()),
                        url(r'^$', DetailView.as_view(
                            model=Person,
@@ -27,8 +26,6 @@ urlpatterns = patterns('',
 
                        # Uncomment the next line to enable the admin:
                        url(r'^admin/', include(admin.site.urls)),
-                       url(r'^my_admin/jsi18n', 'django.views.i18n.javascript_catalog'),
-
                        )
 if settings.DEBUG:
 # static files (images, css, javascript, etc.)
