@@ -1,4 +1,4 @@
-from django.db import models, utils
+from django.db import models
 from django.db.models.signals import post_save, pre_delete
 
 class Request(models.Model):
@@ -33,7 +33,25 @@ class SignalInfo(models.Model):
         return '{0} at {1}'.format(self.body, self.time)
 
 
+def db_table_exists(table, cursor=None):
+    try:
+        if not cursor:
+            from django.db import connection
+
+            cursor = connection.cursor()
+        if not cursor:
+            raise Exception
+        table_names = connection.introspection.get_table_list(cursor)
+    except:
+        raise Exception("unable to determine if the table '%s' exists" % table)
+    else:
+        return table in table_names
+
+
 def edit_callback(sender, created, instance, **kwargs):
+    if (not db_table_exists('main_signalinfo')):
+        print 'Can\'t create signal, because table for it is not created yet!'
+        return
     if (sender == SignalInfo):
         return
     if (kwargs.get('raw', True)):
@@ -43,10 +61,7 @@ def edit_callback(sender, created, instance, **kwargs):
     else:
         action = 'edited'
     s = SignalInfo(body='\'{0}\' was {1}'.format(instance, action))
-    try:
-        s.save()
-    except utils.DatabaseError:
-        print 'Can\'t save signal!\n'
+    s.save()
 
 
 def delete_callback(sender, instance, **kwargs):
@@ -54,7 +69,5 @@ def delete_callback(sender, instance, **kwargs):
         s = SignalInfo(body='\'{0}\' was {1}'.format(instance, 'deleted'))
         s.save()
 
-post_save.connect(edit_callback, sender=Request)
-post_save.connect(edit_callback, sender=Person)
-pre_delete.connect(delete_callback, sender=Request)
-pre_delete.connect(delete_callback, sender=Person)
+post_save.connect(edit_callback)
+pre_delete.connect(delete_callback)
