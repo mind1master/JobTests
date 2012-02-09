@@ -33,10 +33,10 @@ class SignalInfo(models.Model):
         return '{0} at {1}'.format(self.body, self.time)
 
 
-def edit_callback(sender, created, raw, instance, **kwargs):
+def edit_callback(sender, created, instance, **kwargs):
     if (sender == SignalInfo):
         return
-    if (raw):
+    if (kwargs.get('raw', True)):
         return
     if (created):
         action = 'created'
