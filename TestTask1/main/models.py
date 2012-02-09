@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, utils
 from django.db.models.signals import post_save, pre_delete
 
 class Request(models.Model):
@@ -41,7 +41,10 @@ def edit_callback(sender, created, instance, **kwargs):
     else:
         action = 'edited'
     s = SignalInfo(body='\'{0}\' was {1}'.format(instance, action))
-    s.save()
+    try:
+        s.save()
+    except utils.DatabaseError:
+        print 'Table is not created!'
 
 
 def delete_callback(sender, instance, **kwargs):
