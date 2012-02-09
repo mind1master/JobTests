@@ -46,7 +46,7 @@ def edit_callback(sender, created, instance, **kwargs):
     try:
         s.save()
     except utils.DatabaseError:
-        print 'Table is not created!'
+        print 'Can\'t save signal!\n'
 
 
 def delete_callback(sender, instance, **kwargs):
@@ -54,5 +54,7 @@ def delete_callback(sender, instance, **kwargs):
         s = SignalInfo(body='\'{0}\' was {1}'.format(instance, 'deleted'))
         s.save()
 
-post_save.connect(edit_callback)
-pre_delete.connect(delete_callback)
+post_save.connect(edit_callback, sender=Request)
+post_save.connect(edit_callback, sender=Person)
+pre_delete.connect(delete_callback, sender=Request)
+pre_delete.connect(delete_callback, sender=Person)
