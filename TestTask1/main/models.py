@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.signals import post_save, pre_delete
+from django.db import connection
 
 class Request(models.Model):
     header = models.CharField(max_length=100)
@@ -33,25 +34,20 @@ class SignalInfo(models.Model):
         return '{0} at {1}'.format(self.body, self.time)
 
 
-def db_table_exists(table, cursor=None):
-    try:
-        if not cursor:
-            from django.db import connection
-
-            cursor = connection.cursor()
-        if not cursor:
-            raise Exception
-        table_names = connection.introspection.get_table_list(cursor)
-    except:
-        raise Exception("unable to determine if the table '%s' exists" % table)
-    else:
-        return table in table_names
+def _db_table_exists(table):
+    cursor = connection.cursor()
+    table_names = connection.introspection.get_table_list(cursor)
+    return table in table_names
 
 
-def edit_callback(sender, created, instance, **kwargs):
-    if (not db_table_exists('main_signalinfo')):
-        print 'Can\'t create signal, because table for it is not created yet!'
+def edit_callback1(sender, created, instance, **kwargs):
+    if (not _db_table_exists('main_signalinfo')):
         return
+    post_save.disconnect(edit_callback1)
+    post_save.connect(edit_callback2)
+
+
+def edit_callback2(sender, created, instance, **kwargs):
     if (sender == SignalInfo):
         return
     if (kwargs.get('raw', True)):
@@ -69,5 +65,5 @@ def delete_callback(sender, instance, **kwargs):
         s = SignalInfo(body='\'{0}\' was {1}'.format(instance, 'deleted'))
         s.save()
 
-post_save.connect(edit_callback)
+post_save.connect(edit_callback1)
 pre_delete.connect(delete_callback)
