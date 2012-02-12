@@ -120,7 +120,7 @@ ROOT_URLCONF = 'TestTask1.urls'
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 TEMPLATE_DIRS = (PROJECT_PATH + '/templates/',)
-
+SOUTH_TESTS_MIGRATE = False
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
 LOGIN_REDIRECT_URL = '/'
@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'TestTask1.main',
+    'south',
     )
 
 # A sample logging configuration. The only tangible logging
