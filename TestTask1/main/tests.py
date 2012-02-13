@@ -14,13 +14,6 @@ from TestTask1.main.models import Person, SignalInfo
 import os
 import datetime
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
-
 
 class MainPageTest(TestCase):
     def test_http(self):
@@ -56,7 +49,8 @@ class AuthTest(TestCase):
 class FormTest(TestCase):
     def test_form(self):
         p = Person.objects.get(pk=1)
-        mdata = {'name': p.name, 'surname': p.surname, 'birth_date': p.birth_date,
+        mdata = {'name': p.name, 'surname': p.surname,
+                 'birth_date': p.birth_date,
                  'bio': p.bio, 'skype': p.skype, 'email': p.email,
                  'phone': p.phone, 'photo': p.photo}
         form = PersonForm(data=mdata)
@@ -99,8 +93,11 @@ class CommandTest(TestCase):
         self.assertTrue(os.path.isfile(settings.PROJECT_PATH + '/list_models'))
         a = os.system('cd ' + settings.PROJECT_PATH + '/ && ./list_models')
         self.assertTrue(
-            os.path.isfile(settings.PROJECT_PATH + '/' + datetime.date.today().strftime('%m_%d_%Y') + '.dat'))
-        os.remove(settings.PROJECT_PATH + '/' + datetime.date.today().strftime('%m_%d_%Y') + '.dat')
+            os.path.isfile(settings.PROJECT_PATH + '/' +
+                           datetime.date.today().strftime('%m_%d_%Y') +
+                           '.dat'))
+        os.remove(settings.PROJECT_PATH + '/' +
+                  datetime.date.today().strftime('%m_%d_%Y') + '.dat')
 
 
 class SignalsTest(TestCase):
@@ -124,4 +121,3 @@ class PriorityTest(TestCase):
         self.assertEqual(response.status_code, 302)
         r = Request.objects.get(pk=pk)
         self.assertEqual(r.priority, 0)
-

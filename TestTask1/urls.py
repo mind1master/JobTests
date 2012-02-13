@@ -14,13 +14,15 @@ urlpatterns = patterns('',
     url(r'^requests/(?P<page>\d+)/$', RequestListView.as_view()),
     url(r'^requests/$', RequestListView.as_view()),
 
-    url(r'^request/(?P<pk>\d+)/(?P<action>inc|dec)/$', 'TestTask1.main.views.change_priority_view'),
+    url(r'^request/(?P<pk>\d+)/(?P<action>inc|dec)/$',
+        'TestTask1.main.views.change_priority_view'),
 
     url(r'^$', DetailView.as_view(
         model=Person,
         template_name='main_page.html'), {'pk': 1}),
 
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+    url(r'^login/$', 'django.contrib.auth.views.login',
+            {'template_name': 'login.html'}),
     url(r'^logout/$', 'django.contrib.auth.views.logout',
             {'next_page': '/', 'template_name': 'login.html'}),
     url(r'^edit/$', 'TestTask1.main.views.edit_person_view'),

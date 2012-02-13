@@ -9,28 +9,32 @@ from django.views.generic.list import ListView
 from TestTask1.main.forms import PersonForm
 from TestTask1.main.models import Person, Request
 
+
 @login_required
 def edit_person_view(request):
     p = Person.objects.get(pk=1)
     if request.method == 'POST':
-        form = PersonForm(request.POST, request.FILES) #
+        form = PersonForm(request.POST, request.FILES)
         if form.is_valid():
             np = form.save(commit=False)
             if (np.photo.name == None):
                 np.photo = p.photo
             np.pk = 1
             np.save()
-            return HttpResponse(simplejson.dumps({'response': np.photo.url, 'result': 'success'}))
+            return HttpResponse(simplejson.dumps({'response': np.photo.url,
+                                                  'result': 'success'}))
         else:
             response = {}
             for k in form.errors:
                 response[k] = form.errors[k][0]
-            return HttpResponse(simplejson.dumps({'response': response, 'result': 'error'}))
+            return HttpResponse(simplejson.dumps({'response': response,
+                                                  'result': 'error'}))
     else:
-        form = PersonForm(instance=p) # An unbound form
+        form = PersonForm(instance=p)  # An unbound form
 
     c = {'form': form, 'profile': p}
-    return render_to_response("edit.html", c, context_instance=RequestContext(request))
+    return render_to_response("edit.html", c,
+        context_instance=RequestContext(request))
 
 
 class RequestListView(ListView):

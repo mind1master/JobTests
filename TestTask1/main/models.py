@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save, pre_delete
 from django.db import connection
 
+
 class Request(models.Model):
     header = models.CharField(max_length=100)
     body = models.CharField(max_length=300)
@@ -48,11 +49,11 @@ def initial_edit_callback(sender, created, instance, **kwargs):
 
 
 def edit_callback(sender, created, instance, **kwargs):
-    if (sender == SignalInfo):
+    if sender == SignalInfo:
         return
-    if (kwargs.get('raw', True)):
+    if kwargs.get('raw', True):
         return
-    if (created):
+    if created:
         action = 'created'
     else:
         action = 'edited'
