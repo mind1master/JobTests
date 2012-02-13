@@ -98,6 +98,9 @@ class CommandTest(TestCase):
                            '.dat'))
         os.remove(settings.PROJECT_PATH + '/' +
                   datetime.date.today().strftime('%m_%d_%Y') + '.dat')
+        res = os.system('cd ' + settings.PROJECT_PATH +
+                        '/ && ./manage.py list_models')
+        self.assertEqual(res, 0)
 
 
 class SignalsTest(TestCase):
