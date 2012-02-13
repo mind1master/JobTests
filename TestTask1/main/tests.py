@@ -10,8 +10,7 @@ from django.test.client import Client
 from TestTask1.main.models import Request
 from django.conf import settings
 from TestTask1.main.models import Person, SignalInfo
-import os
-import datetime
+from django.core.management import call_command
 
 
 class MainPageTest(TestCase):
@@ -106,24 +105,15 @@ class TagTest(TestCase):
 
 class CommandTest(TestCase):
     def test_list_models(self):
-        import subprocess
+        from StringIO import StringIO
 
-        self.assertTrue(os.path.isfile(settings.PROJECT_PATH + '/list_models'))
-        a = subprocess.call(
-            'cd ' + settings.PROJECT_PATH + '/ && ./list_models',
-            stdout=subprocess.PIPE, shell=True)
-        self.assertTrue(
-            os.path.isfile(settings.PROJECT_PATH + '/' +
-                           datetime.date.today().strftime('%m_%d_%Y') +
-                           '.dat'))
-        os.remove(settings.PROJECT_PATH + '/' +
-                  datetime.date.today().strftime('%m_%d_%Y') + '.dat')
-        res = subprocess.Popen('cd ' + settings.PROJECT_PATH +
-                               '/ && ./manage.py list_models',
-            stderr=subprocess.PIPE,
-            stdout=subprocess.PIPE, shell=True).communicate()
-        self.assertGreater(res[0].find('class'), -1)
-        self.assertGreater(res[1].find('error'), -1)
+        sout = StringIO()
+        serr = StringIO()
+        call_command('list_models', stdout=sout, stderr=serr)
+        sout.seek(0)
+        serr.seek(0)
+        self.assertGreater(sout.read().find('class'), -1)
+        self.assertGreater(serr.read().find('error'), -1)
 
 
 class SignalsTest(TestCase):
