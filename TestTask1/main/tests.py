@@ -90,17 +90,25 @@ class TagTest(TestCase):
 
 class CommandTest(TestCase):
     def test_list_models(self):
+        import subprocess
+
+
         self.assertTrue(os.path.isfile(settings.PROJECT_PATH + '/list_models'))
-        a = os.system('cd ' + settings.PROJECT_PATH + '/ && ./list_models')
+        a = subprocess.Popen(
+            'cd ' + settings.PROJECT_PATH + '/ && ./list_models',
+            stdout=subprocess.PIPE, shell=True)
         self.assertTrue(
             os.path.isfile(settings.PROJECT_PATH + '/' +
                            datetime.date.today().strftime('%m_%d_%Y') +
                            '.dat'))
         os.remove(settings.PROJECT_PATH + '/' +
                   datetime.date.today().strftime('%m_%d_%Y') + '.dat')
-        res = os.system('cd ' + settings.PROJECT_PATH +
-                        '/ && ./manage.py list_models')
-        self.assertEqual(res, 0)
+        res = subprocess.Popen('cd ' + settings.PROJECT_PATH +
+                               '/ && ./manage.py list_models',
+            stderr=subprocess.PIPE,
+            stdout=subprocess.PIPE, shell=True).communicate()
+        self.assertGreater(res[0].find('class'), -1)
+        self.assertGreater(res[1].find('error'), -1)
 
 
 class SignalsTest(TestCase):
