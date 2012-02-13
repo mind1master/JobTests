@@ -40,14 +40,14 @@ def _db_table_exists(table):
     return table in table_names
 
 
-def edit_callback1(sender, created, instance, **kwargs):
+def initial_edit_callback(sender, created, instance, **kwargs):
     if (not _db_table_exists('main_signalinfo')):
         return
-    post_save.disconnect(edit_callback1)
-    post_save.connect(edit_callback2)
+    post_save.disconnect(initial_edit_callback)
+    post_save.connect(edit_callback)
 
 
-def edit_callback2(sender, created, instance, **kwargs):
+def edit_callback(sender, created, instance, **kwargs):
     if (sender == SignalInfo):
         return
     if (kwargs.get('raw', True)):
@@ -65,5 +65,5 @@ def delete_callback(sender, instance, **kwargs):
         s = SignalInfo(body='\'{0}\' was {1}'.format(instance, 'deleted'))
         s.save()
 
-post_save.connect(edit_callback1)
+post_save.connect(initial_edit_callback)
 pre_delete.connect(delete_callback)
