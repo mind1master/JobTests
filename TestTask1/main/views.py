@@ -12,7 +12,7 @@ from TestTask1.main.models import Person, Request
 
 @login_required
 def edit_person_view(request):
-    p = Person.objects.get(pk=1)
+    p = Person.objects.all()[0]
     if request.method == 'POST':
         form = PersonForm(request.POST, request.FILES)
         if form.is_valid():
@@ -21,14 +21,24 @@ def edit_person_view(request):
                 np.photo = p.photo
             np.pk = 1
             np.save()
-            return HttpResponse(simplejson.dumps({'response': np.photo.url,
-                                                  'result': 'success'}))
+            try:
+                if request.POST['isJS'] == 'no':
+                    return redirect('/edit/')
+            except:
+                return HttpResponse(simplejson.dumps({'response': np.photo.url,
+                                                      'result': 'success'}))
         else:
             response = {}
             for k in form.errors:
                 response[k] = form.errors[k][0]
-            return HttpResponse(simplejson.dumps({'response': response,
-                                                  'result': 'error'}))
+            try:
+                if request.POST['isJS'] == 'no':
+                    c = {'form': form, 'profile': p}
+                    return render_to_response("edit.html", c,
+                        context_instance=RequestContext(request))
+            except:
+                return HttpResponse(simplejson.dumps({'response': response,
+                                                      'result': 'error'}))
     else:
         form = PersonForm(instance=p)  # An unbound form
 
