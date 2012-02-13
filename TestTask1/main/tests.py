@@ -48,7 +48,7 @@ class AuthTest(TestCase):
 
 class FormTest(TestCase):
     def test_form(self):
-        p = Person.objects.get(pk=1)
+        p = Person.objects.all()[0]
         mdata = {'name': p.name, 'surname': p.surname,
                  'birth_date': p.birth_date,
                  'bio': p.bio, 'skype': p.skype, 'email': p.email,
