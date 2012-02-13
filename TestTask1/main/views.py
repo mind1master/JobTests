@@ -10,7 +10,7 @@ from TestTask1.main.forms import PersonForm
 from TestTask1.main.models import Person, Request
 
 @login_required
-def editPerson(request):
+def edit_person_view(request):
     p = Person.objects.get(pk=1)
     if request.method == 'POST':
         form = PersonForm(request.POST, request.FILES) #
@@ -33,14 +33,14 @@ def editPerson(request):
     return render_to_response("edit.html", c, context_instance=RequestContext(request))
 
 
-class RequestList(ListView):
+class RequestListView(ListView):
     queryset = Request.objects.order_by('-priority', 'time')
     context_object_name = 'requests_list'
     template_name = 'requests.html'
     paginate_by = 10
 
 
-def changePriorityView(request, pk, action):
+def change_priority_view(request, pk, action):
     r = Request.objects.get(pk=pk)
     if action == 'inc':
         r.priority = r.priority + 1
