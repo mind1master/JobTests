@@ -108,9 +108,8 @@ class CommandTest(TestCase):
     def test_list_models(self):
         import subprocess
 
-
         self.assertTrue(os.path.isfile(settings.PROJECT_PATH + '/list_models'))
-        a = subprocess.Popen(
+        a = subprocess.call(
             'cd ' + settings.PROJECT_PATH + '/ && ./list_models',
             stdout=subprocess.PIPE, shell=True)
         self.assertTrue(
