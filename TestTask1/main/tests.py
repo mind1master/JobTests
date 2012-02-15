@@ -121,7 +121,7 @@ class SignalsTest(TestCase):
         c = Client()
         c.get('/non_existing')
         m, created = SignalInfo.objects.\
-        get_or_create(body__contains='non_existing')
+        get_or_create(header__contains='non_existing')
         self.assertFalse(created)
 
 

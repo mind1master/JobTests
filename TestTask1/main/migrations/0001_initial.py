@@ -2,7 +2,6 @@
 from south.db import db
 from south.v2 import SchemaMigration
 
-
 class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding model 'Request'
@@ -14,8 +13,8 @@ class Migration(SchemaMigration):
             ('body',
              self.gf('django.db.models.fields.CharField')(max_length=300)),
             ('time',
-             self.gf('django.db.models.fields.'
-                     'DateTimeField')(auto_now_add=True, blank=True)),
+             self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True,
+                 blank=True)),
             ('priority',
              self.gf('django.db.models.fields.IntegerField')(default=0)),
             ))
@@ -25,15 +24,15 @@ class Migration(SchemaMigration):
         db.create_table('main_person', (
             ('id',
              self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name',
-             self.gf('django.db.models.fields.CharField')(max_length=25)),
+            (
+            'name', self.gf('django.db.models.fields.CharField')(max_length=25))
+            ,
             ('surname',
              self.gf('django.db.models.fields.CharField')(max_length=25)),
-            ('birth_date',
-             self.gf('django.db.models.fields.DateField')()),
+            ('birth_date', self.gf('django.db.models.fields.DateField')()),
             (
-                'bio',
-                self.gf('django.db.models.fields.TextField')(max_length=400)),
+            'bio', self.gf('django.db.models.fields.TextField')(max_length=400))
+            ,
             ('skype',
              self.gf('django.db.models.fields.CharField')(max_length=20)),
             ('email',
@@ -41,8 +40,7 @@ class Migration(SchemaMigration):
             ('phone',
              self.gf('django.db.models.fields.CharField')(max_length=15)),
             ('photo',
-             self.gf('django.db.models.fields.files.'
-                     'ImageField')(max_length=100,
+             self.gf('django.db.models.fields.files.ImageField')(max_length=100,
                  null=True, blank=True)),
             ))
         db.send_create_signal('main', ['Person'])
@@ -51,14 +49,23 @@ class Migration(SchemaMigration):
         db.create_table('main_signalinfo', (
             ('id',
              self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('time',
-             self.gf('django.db.models.fields.'
-                     'DateTimeField')(auto_now_add=True,
+            ('datetime',
+             self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True,
                  blank=True)),
-            ('body',
+            ('header',
              self.gf('django.db.models.fields.CharField')(max_length=256)),
+            ('model',
+             self.gf('django.db.models.fields.CharField')(max_length=256)),
+            (
+            'app', self.gf('django.db.models.fields.CharField')(max_length=256))
+            ,
+            ('action',
+             self.gf('django.db.models.fields.CharField')(max_length=256)),
+            ('instance_pk',
+             self.gf('django.db.models.fields.PositiveIntegerField')()),
             ))
         db.send_create_signal('main', ['SignalInfo'])
+
 
     def backwards(self, orm):
         # Deleting model 'Request'
@@ -70,58 +77,59 @@ class Migration(SchemaMigration):
         # Deleting model 'SignalInfo'
         db.delete_table('main_signalinfo')
 
+
     models = {
         'main.person': {
             'Meta': {'object_name': 'Person'},
             'bio': (
-                'django.db.models.fields.TextField', [],
-                    {'max_length': '400'}),
+            'django.db.models.fields.TextField', [], {'max_length': '400'}),
             'birth_date': ('django.db.models.fields.DateField', [], {}),
             'email': (
-                'django.db.models.fields.EmailField', [],
-                    {'max_length': '75'}),
+            'django.db.models.fields.EmailField', [], {'max_length': '75'}),
             'id': (
-                'django.db.models.fields.AutoField', [],
-                    {'primary_key': 'True'}),
+            'django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': (
-                'django.db.models.fields.CharField', [], {'max_length': '25'}),
+            'django.db.models.fields.CharField', [], {'max_length': '25'}),
             'phone': (
-                'django.db.models.fields.CharField', [], {'max_length': '15'}),
-            'photo': (
-                'django.db.models.fields.files.ImageField', [],
-                    {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'photo': ('django.db.models.fields.files.ImageField', [],
+                          {'max_length': '100', 'null': 'True',
+                           'blank': 'True'}),
             'skype': (
-                'django.db.models.fields.CharField', [], {'max_length': '20'}),
+            'django.db.models.fields.CharField', [], {'max_length': '20'}),
             'surname': (
-                'django.db.models.fields.CharField', [], {'max_length': '25'})
+            'django.db.models.fields.CharField', [], {'max_length': '25'})
         },
         'main.request': {
             'Meta': {'ordering': "['priority', 'time']",
                      'object_name': 'Request'},
             'body': (
-                'django.db.models.fields.CharField', [],
-                    {'max_length': '300'}),
+            'django.db.models.fields.CharField', [], {'max_length': '300'}),
             'header': (
-                'django.db.models.fields.CharField', [],
-                    {'max_length': '100'}),
+            'django.db.models.fields.CharField', [], {'max_length': '100'}),
             'id': (
-                'django.db.models.fields.AutoField', [],
-                    {'primary_key': 'True'}),
+            'django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'priority': (
-                'django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'django.db.models.fields.IntegerField', [], {'default': '0'}),
             'time': ('django.db.models.fields.DateTimeField', [],
                          {'auto_now_add': 'True', 'blank': 'True'})
         },
         'main.signalinfo': {
             'Meta': {'object_name': 'SignalInfo'},
-            'body': (
-                'django.db.models.fields.CharField', [],
-                    {'max_length': '256'}),
+            'action': (
+            'django.db.models.fields.CharField', [], {'max_length': '256'}),
+            'app': (
+            'django.db.models.fields.CharField', [], {'max_length': '256'}),
+            'datetime': ('django.db.models.fields.DateTimeField', [],
+                             {'auto_now_add': 'True', 'blank': 'True'}),
+            'header': (
+            'django.db.models.fields.CharField', [], {'max_length': '256'}),
             'id': (
-                'django.db.models.fields.AutoField', [],
-                    {'primary_key': 'True'}),
-            'time': ('django.db.models.fields.DateTimeField', [],
-                         {'auto_now_add': 'True', 'blank': 'True'})
+            'django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'instance_pk': (
+            'django.db.models.fields.PositiveIntegerField', [], {}),
+            'model': (
+            'django.db.models.fields.CharField', [], {'max_length': '256'})
         }
     }
 

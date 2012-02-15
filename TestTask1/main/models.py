@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.signals import post_save, pre_delete
 from django.db import connection
@@ -28,11 +29,19 @@ class Person(models.Model):
 
 
 class SignalInfo(models.Model):
-    time = models.DateTimeField(auto_now_add=True)
-    body = models.CharField(max_length=256)
+    datetime = models.DateTimeField(auto_now_add=True)
+    header = models.CharField(max_length=256)
+    model = models.CharField(max_length=256)
+    app = models.CharField(max_length=256)
+    action = models.CharField(max_length=256)
+    object_pk = models.PositiveIntegerField()
+
+    def get_instance(self):
+        c = ContentType.objects.get(app_label=self.app, model=self.model)
+        return c.get_object_for_this_type(pk=self.object_pk)
 
     def __unicode__(self):
-        return '{0} at {1}'.format(self.body, self.time)
+        return '{0} at {1}'.format(self.header, self.datetime)
 
 
 def _db_table_exists(table):
@@ -57,14 +66,20 @@ def edit_callback(sender, created, instance, **kwargs):
         action = 'created'
     else:
         action = 'edited'
-    s = SignalInfo(body='\'{0}\' was {1}'.format(instance, action))
+    c = ContentType.objects.get_for_model(instance)
+    s = SignalInfo(header='\'{0}\' was {1}'.format(instance, action),
+        action=action, model=c.model, app=c.app_label, object_pk=c.pk)
     s.save()
 
 
 def delete_callback(sender, instance, **kwargs):
     if (not sender == SignalInfo):
-        s = SignalInfo(body='\'{0}\' was {1}'.format(instance, 'deleted'))
+        action = 'deleted'
+        c = ContentType.objects.get_for_model(instance)
+        s = SignalInfo(header='\'{0}\' was {1}'.format(instance, action),
+            action=action, model=c.model, app=c.app_label, object_pk=c.pk)
         s.save()
+
 
 post_save.connect(initial_edit_callback)
 pre_delete.connect(delete_callback)
